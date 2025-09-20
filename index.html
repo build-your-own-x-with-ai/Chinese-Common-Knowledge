@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国常识 - 了解中国的基础知识</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    
+    <!-- Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#c8102e', // 中国红
+                        secondary: '#d4af37', // 金色
+                        accent: '#1a5e38', // 青绿色
+                        dark: '#2d2d2d',
+                        light: '#f8f8f8'
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans SC', 'sans-serif'],
+                        serif: ['Noto Serif SC', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            }
+            .bg-pattern {
+                background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23d4af37' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            }
+            .scroll-smooth {
+                scroll-behavior: smooth;
+            }
+            .card-hover {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+        }
+    </style>
+    
+    <!-- 字体引入 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-light bg-pattern text-dark font-sans scroll-smooth">
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-sm shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="#" class="flex items-center space-x-2">
+                <span class="text-primary text-2xl"><i class="fa fa-book"></i></span>
+                <span class="font-serif font-bold text-xl md:text-2xl text-primary">中国常识</span>
+            </a>
+            
+            <!-- 移动端菜单按钮 -->
+            <button id="menu-toggle" class="md:hidden text-dark focus:outline-none">
+                <i class="fa fa-bars text-xl"></i>
+            </button>
+            
+            <!-- 桌面端导航 -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="font-medium hover:text-primary transition-colors">首页</a>
+                <a href="#geography" class="font-medium hover:text-primary transition-colors">地理常识</a>
+                <a href="#history" class="font-medium hover:text-primary transition-colors">历史常识</a>
+                <a href="#literature" class="font-medium hover:text-primary transition-colors">文学常识</a>
+                <a href="#quiz" class="font-medium hover:text-primary transition-colors">知识测验</a>
+            </nav>
+        </div>
+        
+        <!-- 移动端菜单 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="#home" class="py-2 font-medium hover:text-primary transition-colors">首页</a>
+                <a href="#geography" class="py-2 font-medium hover:text-primary transition-colors">地理常识</a>
+                <a href="#history" class="py-2 font-medium hover:text-primary transition-colors">历史常识</a>
+                <a href="#literature" class="py-2 font-medium hover:text-primary transition-colors">文学常识</a>
+                <a href="#quiz" class="py-2 font-medium hover:text-primary transition-colors">知识测验</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section id="home" class="pt-24 md:pt-32 pb-16 md:pb-24 bg-gradient-to-b from-primary/5 to-light">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="font-serif font-bold text-[clamp(2rem,5vw,3.5rem)] leading-tight text-dark mb-4">
+                        探索<span class="text-primary">中国</span>的<br>
+                        <span class="text-accent">文化与历史</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-700 mb-8 max-w-lg">
+                        了解中国的地理风貌、历史变迁和文学瑰宝，探索这个拥有五千年文明的古老国度。
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#geography" class="bg-primary hover:bg-primary/90 text-white font-medium px-6 py-3 rounded-lg transition-all shadow-lg hover:shadow-xl">
+                            开始探索 <i class="fa fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="#quiz" class="bg-white hover:bg-gray-50 text-primary border border-primary font-medium px-6 py-3 rounded-lg transition-all shadow-md hover:shadow-lg">
+                            知识测验 <i class="fa fa-question-circle ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 relative">
+                    <div class="relative rounded-xl overflow-hidden shadow-2xl transform md:rotate-2 transition-transform hover:rotate-0 duration-500">
+                        <img src="https://picsum.photos/id/1036/800/600" alt="中国风景图，展示了壮丽的山水景观" class="w-full h-auto">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                            <p class="text-white p-6 text-lg font-medium">中国的自然与人文景观</p>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg hidden md:block">
+                        <div class="flex items-center space-x-3">
+                            <div class="bg-primary/10 p-3 rounded-full">
+                                <i class="fa fa-map-marker text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium">34个省级行政区</p>
+                                <p class="text-sm text-gray-600">丰富的地理多样性</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 数据概览 -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
+                <div class="bg-white p-6 rounded-xl shadow-md text-center card-hover">
+                    <div class="text-primary text-3xl mb-2"><i class="fa fa-globe"></i></div>
+                    <h3 class="font-serif font-bold text-xl mb-1">960万+</h3>
+                    <p class="text-gray-600">平方公里国土面积</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md text-center card-hover">
+                    <div class="text-secondary text-3xl mb-2"><i class="fa fa-history"></i></div>
+                    <h3 class="font-serif font-bold text-xl mb-1">5000+</h3>
+                    <p class="text-gray-600">年文明史</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md text-center card-hover">
+                    <div class="text-accent text-3xl mb-2"><i class="fa fa-language"></i></div>
+                    <h3 class="font-serif font-bold text-xl mb-1">56</h3>
+                    <p class="text-gray-600">个民族</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md text-center card-hover">
+                    <div class="text-primary text-3xl mb-2"><i class="fa fa-book"></i></div>
+                    <h3 class="font-serif font-bold text-xl mb-1">无数</h3>
+                    <p class="text-gray-600">文学瑰宝</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 地理常识部分 -->
+    <section id="geography" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">认识中国</span>
+                <h2 class="font-serif font-bold text-[clamp(1.8rem,4vw,2.5rem)] mb-4">地理常识</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">中国地域辽阔，地形多样，拥有丰富的自然资源和多样的气候类型。</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 地理卡片1 -->
+                <div class="bg-light rounded-xl overflow-hidden shadow-md card-hover">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://picsum.photos/id/29/600/400" alt="中国山脉景观，展示了雄伟的山峰" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-serif font-bold text-xl mb-3">地形特征</h3>
+                        <p class="text-gray-700 mb-4">中国地形复杂多样，地势西高东低，呈三级阶梯分布。主要地形包括高原、山地、平原、盆地和丘陵。</p>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                                <span>四大高原：青藏高原、内蒙古高原、黄土高原、云贵高原</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                                <span>三大平原：东北平原、华北平原、长江中下游平原</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 地理卡片2 -->
+                <div class="bg-light rounded-xl overflow-hidden shadow-md card-hover">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://picsum.photos/id/137/600/400" alt="长江景观，展示了宽阔的江面和两岸风光" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-serif font-bold text-xl mb-3">河流与湖泊</h3>
+                        <p class="text-gray-700 mb-4">中国拥有众多河流和湖泊，水资源丰富，其中长江和黄河是中国的两条母亲河。</p>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                                <span>长江：中国第一长河，世界第三长河，全长约6300公里</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                                <span>黄河：中国第二长河，全长约5464公里，是中华文明的发源地</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                                <span>著名湖泊：青海湖、鄱阳湖、洞庭湖、太湖</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 地理卡片3 -->
+                <div class="bg-light rounded-xl overflow-hidden shadow-md card-hover">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://picsum.photos/id/42/600/400" alt="中国行政区划地图，展示了34个省级行政区" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-serif font-bold text-xl mb-3">行政区划</h3>
+                        <p class="text-gray-700 mb-4">中国共有34个省级行政区，包括23个省、5个自治区、4个直辖市和2个特别行政区。</p>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                                <span>4个直辖市：北京、上海、天津、重庆</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                                <span>2个特别行政区：香港、澳门</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-check-circle text-accent mt-1 mr-2"></i>
+                                <span>5个自治区：内蒙古、宁夏、新疆、西藏、广西</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 地理数据可视化 -->
+            <div class="mt-16 bg-light p-6 md:p-8 rounded-xl shadow-md">
+                <h3 class="font-serif font-bold text-xl mb-6 text-center">中国主要地理区域面积占比</h3>
+                <div class="h-80">
+                    <canvas id="geographyChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 历史常识部分 -->
+    <section id="history" class="py-16 md:py-24 bg-gradient-to-b from-light to-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-1 bg-secondary/10 text-secondary rounded-full text-sm font-medium mb-4">悠久岁月</span>
+                <h2 class="font-serif font-bold text-[clamp(1.8rem,4vw,2.5rem)] mb-4">历史常识</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">中国拥有五千年不间断的文明史，经历了多个朝代的更替和发展。</p>
+            </div>
+            
+            <!-- 历史时间线 -->
+            <div class="relative">
+                <!-- 时间线中轴线 -->
+                <div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/30 transform md:translate-x-px"></div>
+                
+                <!-- 时间线项目1 -->
+                <div class="relative mb-12">
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="md:w-1/2 md:pr-12 md:text-right mb-6 md:mb-0 md:order-1 order-2">
+                            <h3 class="font-serif font-bold text-xl text-dark mb-2">夏商周时期</h3>
+                            <p class="text-gray-500 mb-2">约公元前2070年-公元前256年</p>
+                            <p class="text-gray-700">中国最早的朝代，青铜文明的鼎盛时期，甲骨文出现，是中华文明的源头。</p>
+                        </div>
+                        <div class="absolute left-0 md:left-1/2 w-6 h-6 rounded-full bg-primary transform -translate-x-1/2 md:translate-x-px flex items-center justify-center z-10">
+                            <div class="w-3 h-3 rounded-full bg-white"></div>
+                        </div>
+                        <div class="md:w-1/2 md:pl-12 md:order-2 order-1 hidden md:block">
+                            <div class="rounded-lg overflow-hidden shadow-md">
+                                <img src="https://picsum.photos/id/30/600/400" alt="商代青铜器展示，体现了当时高超的工艺" class="w-full h-auto">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 时间线项目2 -->
+                <div class="relative mb-12">
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="md:w-1/2 md:pr-12 hidden md:block md:order-1 order-1">
+                            <div class="rounded-lg overflow-hidden shadow-md">
+                                <img src="https://picsum.photos/id/1040/600/400" alt="长城景观，是秦汉时期的重要军事工程" class="w-full h-auto">
+                            </div>
+                        </div>
+                        <div class="absolute left-0 md:left-1/2 w-6 h-6 rounded-full bg-primary transform -translate-x-1/2 md:translate-x-px flex items-center justify-center z-10">
+                            <div class="w-3 h-3 rounded-full bg-white"></div>
+                        </div>
+                        <div class="md:w-1/2 md:pl-12 mb-6 md:mb-0 md:order-2 order-2">
+                            <h3 class="font-serif font-bold text-xl text-dark mb-2">秦汉时期</h3>
+                            <p class="text-gray-500 mb-2">公元前221年-公元220年</p>
+                            <p class="text-gray-700">秦始皇统一中国，建立中央集权制度，修筑长城。汉朝是中国历史上强盛的朝代之一，开辟丝绸之路。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 时间线项目3 -->
+                <div class="relative mb-12">
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="md:w-1/2 md:pr-12 md:text-right mb-6 md:mb-0 md:order-1 order-2">
+                            <h3 class="font-serif font-bold text-xl text-dark mb-2">隋唐时期</h3>
+                            <p class="text-gray-500 mb-2">公元581年-公元907年</p>
+                            <p class="text-gray-700">隋朝统一中国，开凿大运河。唐朝是中国历史上的黄金时代，文化繁荣，对外交流频繁，长安成为国际大都市。</p>
+                        </div>
+                        <div class="absolute left-0 md:left-1/2 w-6 h-6 rounded-full bg-primary transform -translate-x-1/2 md:translate-x-px flex items-center justify-center z-10">
+                            <div class="w-3 h-3 rounded-full bg-white"></div>
+                        </div>
+                        <div class="md:w-1/2 md:pl-12 md:order-2 order-1 hidden md:block">
+                            <div class="rounded-lg overflow-hidden shadow-md">
+                                <img src="https://picsum.photos/id/307/600/400" alt="唐代文化艺术展示，体现了当时的繁荣景象" class="w-full h-auto">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 时间线项目4 -->
+                <div class="relative">
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="md:w-1/2 md:pr-12 hidden md:block md:order-1 order-1">
+                            <div class="rounded-lg overflow-hidden shadow-md">
+                                <img src="https://picsum.photos/id/1053/600/400" alt="明清时期建筑，如故宫，展示了当时的建筑成就" class="w-full h-auto">
+                            </div>
+                        </div>
+                        <div class="absolute left-0 md:left-1/2 w-6 h-6 rounded-full bg-primary transform -translate-x-1/2 md:translate-x-px flex items-center justify-center z-10">
+                            <div class="w-3 h-3 rounded-full bg-white"></div>
+                        </div>
+                        <div class="md:w-1/2 md:pl-12 mb-6 md:mb-0 md:order-2 order-2">
+                            <h3 class="font-serif font-bold text-xl text-dark mb-2">明清时期</h3>
+                            <p class="text-gray-500 mb-2">公元1368年-公元1912年</p>
+                            <p class="text-gray-700">明朝郑和七下西洋，清朝康乾盛世国力强盛。这一时期是中国封建社会的最后阶段，末期遭受西方列强侵略。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 历史趣闻 -->
+            <div class="mt-16 bg-white p-6 md:p-8 rounded-xl shadow-md">
+                <h3 class="font-serif font-bold text-xl mb-6 text-center">历史趣闻</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="flex space-x-4">
+                        <div class="text-primary text-3xl mt-1"><i class="fa fa-lightbulb-o"></i></div>
+                        <div>
+                            <h4 class="font-bold text-lg mb-2">最早的"身份证"</h4>
+                            <p class="text-gray-700">中国最早的"身份证"出现在战国时期，称为"照身帖"，由商鞅发明，是一块打磨光滑的竹板，上面刻有持有人的头像和籍贯信息。</p>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4">
+                        <div class="text-primary text-3xl mt-1"><i class="fa fa-cutlery"></i></div>
+                        <div>
+                            <h4 class="font-bold text-lg mb-2">筷子的历史</h4>
+                            <p class="text-gray-700">筷子在中国已有3000多年的历史，最早称为"箸"。明代开始称为"筷子"，与"快"谐音，寓意用餐快速，后来逐渐流传开来。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 文学常识部分 -->
+    <section id="literature" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-1 bg-accent/10 text-accent rounded-full text-sm font-medium mb-4">文化瑰宝</span>
+                <h2 class="font-serif font-bold text-[clamp(1.8rem,4vw,2.5rem)] mb-4">文学常识</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">中国文学源远流长，留下了无数不朽的经典作品和文学巨匠。</p>
+            </div>
+            
+            <!-- 四大名著 -->
+            <div class="mb-16">
+                <h3 class="font-serif font-bold text-2xl mb-8 text-center">中国古典四大名著</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- 名著1 -->
+                    <div class="bg-light rounded-xl overflow-hidden shadow-md card-hover">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://picsum.photos/id/24/600/800" alt="《红楼梦》书籍封面或相关插画" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <h4 class="font-serif font-bold text-xl mb-2">《红楼梦》</h4>
+                            <p class="text-gray-600 mb-3">作者：曹雪芹</p>
+                            <p class="text-gray-700">中国古典小说的巅峰之作，以贾、史、王、薛四大家族的兴衰为背景，描绘了贾宝玉、林黛玉、薛宝钗的爱情悲剧。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 名著2 -->
+                    <div class="bg-light rounded-xl overflow-hidden shadow-md card-hover">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://picsum.photos/id/20/600/800" alt="《三国演义》书籍封面或相关插画" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <h4 class="font-serif font-bold text-xl mb-2">《三国演义》</h4>
+                            <p class="text-gray-600 mb-3">作者：罗贯中</p>
+                            <p class="text-gray-700">以三国时期的历史为背景，描写了魏、蜀、吴三国之间的政治和军事斗争，塑造了诸葛亮、关羽、曹操等经典人物。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 名著3 -->
+                    <div class="bg-light rounded-xl overflow-hidden shadow-md card-hover">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://picsum.photos/id/119/600/800" alt="《水浒传》书籍封面或相关插画" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <h4 class="font-serif font-bold text-xl mb-2">《水浒传》</h4>
+                            <p class="text-gray-600 mb-3">作者：施耐庵</p>
+                            <p class="text-gray-700">描写了宋江领导的108位好汉在梁山泊起义的故事，反映了封建社会的黑暗和人民的反抗精神。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 名著4 -->
+                    <div class="bg-light rounded-xl overflow-hidden shadow-md card-hover">
+                        <div class="h-64 overflow-hidden">
+                            <img src="https://picsum.photos/id/122/600/800" alt="《西游记》书籍封面或相关插画" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <h4 class="font-serif font-bold text-xl mb-2">《西游记》</h4>
+                            <p class="text-gray-600 mb-3">作者：吴承恩</p>
+                            <p class="text-gray-700">讲述了唐僧师徒四人西天取经的神话故事，塑造了孙悟空、猪八戒、沙僧等经典神话人物形象。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 著名诗人 -->
+            <div>
+                <h3 class="font-serif font-bold text-2xl mb-8 text-center">著名诗人与经典诗句</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- 诗人1 -->
+                    <div class="bg-gradient-to-br from-primary/5 to-light p-6 rounded-xl shadow-md card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                                <i class="fa fa-pencil text-primary text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-serif font-bold text-xl">李白</h4>
+                                <p class="text-gray-600">唐代诗人，诗仙</p>
+                            </div>
+                        </div>
+                        <div class="border-l-4 border-primary pl-4 py-2 italic text-gray-700">
+                            "飞流直下三千尺，疑是银河落九天。"
+                        </div>
+                        <p class="mt-4 text-gray-700">李白是中国唐朝时期伟大的浪漫主义诗人，其诗歌风格豪放飘逸，充满想象力，被后人誉为"诗仙"。</p>
+                    </div>
+                    
+                    <!-- 诗人2 -->
+                    <div class="bg-gradient-to-br from-primary/5 to-light p-6 rounded-xl shadow-md card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                                <i class="fa fa-pencil text-primary text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-serif font-bold text-xl">杜甫</h4>
+                                <p class="text-gray-600">唐代诗人，诗圣</p>
+                            </div>
+                        </div>
+                        <div class="border-l-4 border-primary pl-4 py-2 italic text-gray-700">
+                            "会当凌绝顶，一览众山小。"
+                        </div>
+                        <p class="mt-4 text-gray-700">杜甫是唐代伟大的现实主义诗人，其诗歌多反映社会现实和人民疾苦，被后人誉为"诗圣"，其诗被称为"诗史"。</p>
+                    </div>
+                    
+                    <!-- 诗人3 -->
+                    <div class="bg-gradient-to-br from-primary/5 to-light p-6 rounded-xl shadow-md card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                                <i class="fa fa-pencil text-primary text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-serif font-bold text-xl">苏轼</h4>
+                                <p class="text-gray-600">宋代词人，东坡居士</p>
+                            </div>
+                        </div>
+                        <div class="border-l-4 border-primary pl-4 py-2 italic text-gray-700">
+                            "但愿人长久，千里共婵娟。"
+                        </div>
+                        <p class="mt-4 text-gray-700">苏轼是北宋时期的文学巨匠，在诗、词、文、书、画等方面均有很高造诣，其词开创了豪放一派。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 知识测验部分 -->
+    <section id="quiz" class="py-16 md:py-24 bg-gradient-to-b from-light to-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">挑战自我</span>
+                <h2 class="font-serif font-bold text-[clamp(1.8rem,4vw,2.5rem)] mb-4">中国常识测验</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">检验你对中国常识的了解程度，完成以下测验题。</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <div id="quiz-container">
+                    <!-- 问题1 -->
+                    <div class="quiz-question mb-8">
+                        <div class="flex items-start mb-4">
+                            <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3 mt-1">1</span>
+                            <h3 class="font-serif font-bold text-xl">中国的首都是哪个城市？</h3>
+                        </div>
+                        <div class="ml-11 space-y-3">
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-primary/5 cursor-pointer transition-colors">
+                                <input type="radio" name="q1" value="A" class="mr-3">
+                                <span>上海</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-primary/5 cursor-pointer transition-colors">
+                                <input type="radio" name="q1" value="B" class="mr-3">
+                                <span>北京</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-primary/5 cursor-pointer transition-colors">
+                                <input type="radio" name="q1" value="C" class="mr-3">
+                                <span>广州</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-primary/5 cursor-pointer transition-colors">
+                                <input type="radio" name="q1" value="D" class="mr-3">
+                                <span>深圳</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- 问题2 -->
+                    <div class="quiz-question mb-8">
+                        <div class="flex items-start mb-4">
+                            <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3 mt-1">2</span>
+                            <h3 class="font-serif font-bold text-xl">下列哪个不属于中国的四大发明？</h3>
+                        </div>
+                        <div class="ml-11 space-y-3">
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-primary/5 cursor-pointer transition-colors">
+                                <input type="radio" name="q2" value="A" class="mr-3">
+                                <span>造纸术</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-primary/5 cursor-pointer transition-colors">
+                                <input type="radio" name="q2" value="B" class="mr-3">
+                                <span>火药</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-primary/5 cursor-pointer transition-colors">
+                                <input type="radio" name="q2" value="C" class="mr-3">
+                                <span>蒸汽机</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-primary/5 cursor-pointer transition-colors">
+                                <input type="radio" name="q3" value="D" class="mr-3">
+                                <span>指南针</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- 问题3 -->
+                    <div class="quiz-question mb-8">
+                        <div class="flex items-start mb-4">
+                            <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3 mt-1">3</span>
+                            <h3 class="font-serif font-bold text-xl">《论语》主要记录了谁的言行？</h3>
+                        </div>
+                        <div class="ml-11 space-y-3">
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-primary/5 cursor-pointer transition-colors">
+                                <input type="radio" name="q3" value="A" class="mr-3">
+                                <span>孔子</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-primary/5 cursor-pointer transition-colors">
+                                <input type="radio" name="q3" value="B" class="mr-3">
+                                <span>孟子</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-primary/5 cursor-pointer transition-colors">
+                                <input type="radio" name="q3" value="C" class="mr-3">
+                                <span>老子</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-primary/5 cursor-pointer transition-colors">
+                                <input type="radio" name="q3" value="D" class="mr-3">
+                                <span>庄子</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- 问题4 -->
+                    <div class="quiz-question mb-8">
+                        <div class="flex items-start mb-4">
+                            <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3 mt-1">4</span>
+                            <h3 class="font-serif font-bold text-xl">中国最长的河流是？</h3>
+                        </div>
+                        <div class="ml-11 space-y-3">
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-primary/5 cursor-pointer transition-colors">
+                                <input type="radio" name="q4" value="A" class="mr-3">
+                                <span>黄河</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-primary/5 cursor-pointer transition-colors">
+                                <input type="radio" name="q4" value="B" class="mr-3">
+                                <span>长江</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-primary/5 cursor-pointer transition-colors">
+                                <input type="radio" name="q4" value="C" class="mr-3">
+                                <span>珠江</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-primary/5 cursor-pointer transition-colors">
+                                <input type="radio" name="q4" value="D" class="mr-3">
+                                <span>黑龙江</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- 问题5 -->
+                    <div class="quiz-question">
+                        <div class="flex items-start mb-4">
+                            <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3 mt-1">5</span>
+                            <h3 class="font-serif font-bold text-xl">中国古代的科举制度开始于哪个朝代？</h3>
+                        </div>
+                        <div class="ml-11 space-y-3">
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-primary/5 cursor-pointer transition-colors">
+                                <input type="radio" name="q5" value="A" class="mr-3">
+                                <span>汉朝</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-primary/5 cursor-pointer transition-colors">
+                                <input type="radio" name="q5" value="B" class="mr-3">
+                                <span>唐朝</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-primary/5 cursor-pointer transition-colors">
+                                <input type="radio" name="q5" value="C" class="mr-3">
+                                <span>隋朝</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-primary/5 cursor-pointer transition-colors">
+                                <input type="radio" name="q5" value="D" class="mr-3">
+                                <span>宋朝</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-10 text-center">
+                        <button id="submit-quiz" class="bg-primary hover:bg-primary/90 text-white font-medium px-8 py-3 rounded-lg transition-all shadow-lg hover:shadow-xl">
+                            提交答案 <i class="fa fa-paper-plane ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 测验结果 -->
+                <div id="quiz-result" class="hidden text-center py-6">
+                    <div class="mb-6 text-5xl text-primary">
+                        <i class="fa fa-trophy"></i>
+                    </div>
+                    <h3 class="font-serif font-bold text-2xl mb-2">你的得分是：<span id="score" class="text-primary">0</span>/5</h3>
+                    <p id="result-message" class="text-gray-700 mb-6 text-lg"></p>
+                    <button id="reset-quiz" class="bg-white hover:bg-gray-50 text-primary border border-primary font-medium px-6 py-3 rounded-lg transition-all shadow-md hover:shadow-lg">
+                        重新测验 <i class="fa fa-refresh ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <span class="text-primary text-2xl"><i class="fa fa-book"></i></span>
+                        <span class="font-serif font-bold text-xl">中国常识</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">探索中国的地理、历史和文化，了解这个拥有五千年文明的古老国度。</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa fa-weibo text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa fa-wechat text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa fa-twitter text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4">快速链接</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition-colors">首页</a></li>
+                        <li><a href="#geography" class="text-gray-400 hover:text-white transition-colors">地理常识</a></li>
+                        <li><a href="#history" class="text-gray-400 hover:text-white transition-colors">历史常识</a></li>
+                        <li><a href="#literature" class="text-gray-400 hover:text-white transition-colors">文学常识</a></li>
+                        <li><a href="#quiz" class="text-gray-400 hover:text-white transition-colors">知识测验</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4">相关资源</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">中国文化遗产</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">传统节日</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">中国美食</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">名胜古迹</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">民间艺术</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4">订阅更新</h4>
+                    <p class="text-gray-400 mb-4">订阅我们的 newsletter，获取更多中国常识。</p>
+                    <form class="flex">
+                        <input type="email" placeholder="你的邮箱地址" class="px-4 py-2 rounded-l-lg w-full focus:outline-none text-dark">
+                        <button type="submit" class="bg-primary hover:bg-primary/90 px-4 py-2 rounded-r-lg transition-colors">
+                            <i class="fa fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-500">
+                <p>&copy; 2023 中国常识网站 | 探索中华文明的瑰宝</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-primary hover:bg-primary/90 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all opacity-0 invisible">
+        <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('back-to-top');
+            
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2', 'shadow');
+                navbar.classList.remove('py-3');
+                
+                backToTop.classList.remove('opacity-0', 'invisible');
+                backToTop.classList.add('opacity-100', 'visible');
+            } else {
+                navbar.classList.add('py-3');
+                navbar.classList.remove('py-2', 'shadow');
+                
+                backToTop.classList.add('opacity-0', 'invisible');
+                backToTop.classList.remove('opacity-100', 'visible');
+            }
+        });
+        
+        // 移动端菜单切换
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // 关闭移动端菜单
+                document.getElementById('mobile-menu').classList.add('hidden');
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 返回顶部按钮
+        document.getElementById('back-to-top').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // 地理图表
+        const geographyChart = new Chart(
+            document.getElementById('geographyChart'),
+            {
+                type: 'doughnut',
+                data: {
+                    labels: ['山地', '高原', '盆地', '平原', '丘陵'],
+                    datasets: [{
+                        data: [33, 26, 19, 12, 10],
+                        backgroundColor: [
+                            '#c8102e',
+                            '#d4af37',
+                            '#1a5e38',
+                            '#4b9cd3',
+                            '#6a4c93'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    family: 'Noto Sans SC',
+                                    size: 14
+                                },
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    },
+                    cutout: '60%'
+                }
+            }
+        );
+        
+        // 测验功能
+        document.getElementById('submit-quiz').addEventListener('click', function() {
+            // 正确答案
+            const correctAnswers = {
+                q1: 'B',
+                q2: 'C',
+                q3: 'A',
+                q4: 'B',
+                q5: 'C'
+            };
+            
+            // 检查答案
+            let score = 0;
+            let totalQuestions = Object.keys(correctAnswers).length;
+            
+            for (let [question, correctAnswer] of Object.entries(correctAnswers)) {
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                
+                if (selectedOption && selectedOption.value === correctAnswer) {
+                    score++;
+                }
+            }
+            
+            // 显示结果
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('quiz-result').classList.remove('hidden');
+            document.getElementById('score').textContent = score;
+            
+            // 根据得分显示不同消息
+            const resultMessage = document.getElementById('result-message');
+            if (score === 5) {
+                resultMessage.textContent = '太棒了！你对中国常识了如指掌！';
+            } else if (score >= 3) {
+                resultMessage.textContent = '不错哦！你对中国常识有一定的了解。';
+            } else {
+                resultMessage.textContent = '继续加油！多了解一些中国常识吧。';
+            }
+        });
+        
+        // 重置测验
+        document.getElementById('reset-quiz').addEventListener('click', function() {
+            // 重置选项
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            
+            // 显示测验，隐藏结果
+            document.getElementById('quiz-result').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
